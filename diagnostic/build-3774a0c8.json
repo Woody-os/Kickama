@@ -1,0 +1,23 @@
+{
+  "generated_at": "2026-06-20T15:05:42.799100+00:00",
+  "commit": "3774a0c8",
+  "diagnostic_logd": "diagnostic/build-3774a0c8.logd",
+  "diagnostic_logd_error": null,
+  "chunked": false,
+  "chunk_size_bytes": null,
+  "password": "000000000000000000000000",
+  "decrypt_command": "encryptly unpack diagnostic/build-3774a0c8.logd <outdir> --password 000000000000000000000000",
+  "total_modules": 1,
+  "passed": 1,
+  "failed": 0,
+  "modules": [
+    {
+      "name": "build",
+      "status": "PASS",
+      "elapsed_seconds": 0.5,
+      "artifact": null,
+      "output": "Build completed successfully"
+    }
+  ],
+  "pr_note": "Automatically generated diagnostic for PR review"
+}
