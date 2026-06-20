@@ -310,3 +310,35 @@ Audit logs are retained for 365 days and include:
 2. Update Kubernetes secret: `kubectl create secret tls tot-tls --cert=new.crt --key=new.key -n tent-production --dry-run=client -o yaml | kubectl apply -f -`
 3. Restart services: `kubectl rollout restart deployment -n tent-production`
 4. Verify new certificate: `openssl s_client -connect api.example.com:443 -servername api.example.com`
+
+## Diagnostic Metadata Diff Tool
+
+The `tools/diagnostic_diff.py` script compares two diagnostic metadata JSON files
+and produces a human-readable or machine-readable diff of the changes.
+
+### Usage
+
+```bash
+# Human-readable diff
+python3 tools/diagnostic_diff.py diagnostic/build-old.json diagnostic/build-new.json
+
+# JSON output (machine-readable)
+python3 tools/diagnostic_diff.py diagnostic/build-old.json diagnostic/build-new.json --json
+```
+
+### What It Compares
+
+- **Module statuses**: changes from PASS/FAIL/SKIP between builds
+- **Module durations**: timing deltas reported in seconds
+- **Build commands**: command-line changes per module
+- **Artifact names**: added, removed, or renamed build artifacts
+- **Metadata fields**: version, timestamp, build_id, commit, branch, platform
+
+### Exit Codes
+
+| Code | Meaning |
+|------|---------|
+| 0    | Diff completed successfully |
+| 1    | Input file missing or invalid JSON |
+
+> **Note**: This tool requires Python 3.8+ and uses only the standard library.
