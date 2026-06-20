@@ -354,18 +354,54 @@ def rollback_service(service: str, env: str, version: str) -> bool:
                           skip_build=True, skip_test=True, skip_health=False)
 
 
-def list_deployments(env: str, service: Optional[str] = None):
+def list_deployments(env: str, service: Optional[str] = None,
+                         output_format: str = "text",
+                         filter_service: Optional[str] = None,
+                         filter_env: Optional[str] = None):
     history = load_deployment_history(env)
     if service:
         history = [d for d in history if d["service"] == service]
+    if filter_service:
+        history = [d for d in history if d["service"] == filter_service]
 
-    print(f"\nDeployment history for {env}:")
-    print(f"{'Timestamp':<25} {'Service':<15} {'Version':<15} {'Status':<15}")
-    print("-" * 70)
-    for entry in history[-20:]:
-        print(f"{entry['timestamp']:<25} {entry['service']:<15} "
-              f"{entry['version']:<15} {entry['status']:<15}")
-    print()
+    if not history:
+        if output_format == "json":
+            print(json.dumps([], indent=2))
+        else:
+            print(f"No deployment history found for {env}")
+        return
+
+    # Redact secret-looking values from output
+    def redact(value: str) -> str:
+        if not isinstance(value, str):
+            return value
+        secret_patterns = ["key", "secret", "token", "passwd", "password", "cred"]
+        if any(p in value.lower() for p in secret_patterns):
+            return value[:4] + "***" + value[-4:] if len(value) > 8 else "***"
+        return value
+
+    if output_format == "json":
+        # Reversible to preserve ordering for audit
+        sanitized = []
+        for entry in history[-20:]:
+            sanitized.append({
+                "timestamp": entry.get("timestamp", ""),
+                "service": entry.get("service", ""),
+                "version": entry.get("version", ""),
+                "status": entry.get("status", ""),
+                "operator": entry.get("operator", ""),
+                "environment": entry.get("environment", env),
+            })
+        print(json.dumps(sanitized, indent=2))
+    else:
+        print(f"\nDeployment history for {env}:")
+        print(f"{'Timestamp':<25} {'Service':<15} {'Version':<15} {'Status':<15} {'Operator':<15}")
+        print("-" * 85)
+        for entry in history[-20:]:
+            operator = redact(entry.get("operator", ""))
+            print(f"{entry['timestamp']:<25} {entry['service']:<15} "
+                  f"{entry['version']:<15} {entry['status']:<15} {operator:<15}")
+        print()
 
 
 def parse_args():
@@ -382,6 +418,9 @@ def parse_args():
     parser.add_argument("--rollback", action="store_true", help="Rollback instead of deploy")
     parser.add_argument("--version", help="Version to rollback to")
     parser.add_argument("--list", action="store_true", help="List deployments")
+    parser.add_argument("--format", choices=["text", "json"], default="text",
+                       help="Output format for deployment history")
+    parser.add_argument("--filter-service", help="Filter history by service name")
     parser.add_argument("--dry-run", action="store_true", help="Show what would be done")
     parser.add_argument("--verbose", "-v", action="store_true", help="Verbose output")
     return parser.parse_args()
@@ -391,7 +430,12 @@ def main():
     args = parse_args()
 
     if args.list:
-        list_deployments(args.env, args.service if args.service != "all" else None)
+        list_deployments(
+            args.env,
+            args.service if args.service != "all" else None,
+            output_format=args.format,
+            filter_service=args.filter_service,
+        )
         return 0
 
     if args.rollback:
