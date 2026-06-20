@@ -1,5 +1,32 @@
 # Tent of Trials
 
+
+<!-- PROJECT SHIELDS -->
+[![Repo Size][repo-size-shield]][repo-url]
+[![License][license-shield]][repo-url]
+[![Issues][issues-shield]][issues-url]
+[![PRs][prs-shield]][prs-url]
+[![Build][build-shield]][build-url]
+[![Python][python-shield]][python-url]
+[![Rust][rust-shield]][rust-url]
+[![TypeScript][ts-shield]][ts-url]
+
+<!-- SHIELD URLS -->
+[repo-url]: https://github.com/lobster-trap/Kickama
+[issues-url]: https://github.com/lobster-trap/Kickama/issues
+[prs-url]: https://github.com/lobster-trap/Kickama/pulls
+[build-url]: https://github.com/lobster-trap/Kickama/actions
+[python-url]: https://github.com/lobster-trap/Kickama/search?l=python
+[rust-url]: https://github.com/lobster-trap/Kickama/search?l=rust
+[ts-url]: https://github.com/lobster-trap/Kickama/search?l=typescript
+[repo-size-shield]: https://img.shields.io/github/repo-size/lobster-trap/Kickama?style=flat-square
+[license-shield]: https://img.shields.io/github/license/lobster-trap/Kickama?style=flat-square
+[issues-shield]: https://img.shields.io/github/issues/lobster-trap/Kickama?style=flat-square
+[prs-shield]: https://img.shields.io/github/issues-pr/lobster-trap/Kickama?style=flat-square
+[build-shield]: https://img.shields.io/github/actions/workflow/status/lobster-trap/Kickama/ci.yml?branch=main&style=flat-square
+[python-shield]: https://img.shields.io/badge/Python-3.10+-blue?logo=python&style=flat-square
+[rust-shield]: https://img.shields.io/badge/Rust-1.70+-orange?logo=rust&style=flat-square
+[ts-shield]: https://img.shields.io/badge/TypeScript-5.x-blue?logo=typescript&style=flat-square
 Trading and risk platform.
 
 ## Getting Started
