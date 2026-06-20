@@ -13,6 +13,26 @@
 > The known issues from the migration are tracked in the "K8s Migration Known
 > Issues" spreadsheet which is linked from the team's shared drive.
 
+## Deployment History Export
+
+To export deployment history for audit or incident review:
+
+```bash
+# Standard text output
+python3 tools/deploy.py --list --env production
+
+# JSON output for audit trails
+python3 tools/deploy.py --list --env production --format json
+
+# Filter by service
+python3 tools/deploy.py --list --env production --filter-service backend --format json
+
+# Filter by environment
+python3 tools/deploy.py --list --env staging --format json
+```
+
+The JSON output includes timestamps, service names, versions, status, and operator names. Secret-looking values in operator fields are automatically redacted.
+
 ## Monitoring
 
 ### Health Check Endpoints
