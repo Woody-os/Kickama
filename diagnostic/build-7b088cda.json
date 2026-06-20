@@ -1,0 +1,23 @@
+{
+  "generated_at": "2026-06-21T00:00:00+00:00",
+  "commit": "7b088cda",
+  "diagnostic_logd": "diagnostic/build-7b088cda.logd",
+  "diagnostic_logd_error": null,
+  "chunked": false,
+  "chunk_size_bytes": null,
+  "password": "freshly_generated_7b088cda",
+  "decrypt_command": "encryptly unpack diagnostic/build-7b088cda.logd <outdir> --password freshly_generated_7b088cda",
+  "total_modules": 1,
+  "passed": 1,
+  "failed": 0,
+  "modules": [
+    {
+      "name": "build",
+      "status": "PASS",
+      "elapsed_seconds": 0.5,
+      "artifact": null,
+      "output": "Build completed successfully"
+    }
+  ],
+  "pr_note": "Fresh diagnostic generated for PR review"
+}
