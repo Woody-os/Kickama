@@ -1,0 +1,16 @@
+{
+  "generated_at": "invalid-date",
+  "commit": "abc",
+  "diagnostic_logd": "not-a-path",
+  "password": "short",
+  "total_modules": -1,
+  "passed": "string",
+  "failed": 1,
+  "modules": [
+    {
+      "name": "test",
+      "status": "UNKNOWN",
+      "elapsed_seconds": -1
+    }
+  ]
+}
