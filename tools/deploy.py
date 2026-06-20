@@ -368,7 +368,7 @@ def list_deployments(env: str, service: Optional[str] = None):
     print()
 
 
-def parse_args():
+def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Deployment tool")
     parser.add_argument("--env", "-e", required=True, choices=list(ENVIRONMENTS.keys()),
                        help="Target environment")
@@ -387,7 +387,7 @@ def parse_args():
     return parser.parse_args()
 
 
-def main():
+def main() -> None:
     args = parse_args()
 
     if args.list:
