@@ -138,7 +138,7 @@ MIGRATIONS: List[Dict[str, Any]] = [
 ]
 
 
-def execute_sql(sql: str, db_config: Dict[str, str]) -> bool:
+def execute_sql(sql: str, db_config: Dict[str, str], dry_run: bool = False) -> bool:
     psql_env = os.environ.copy()
     if db_config.get("password"):
         psql_env["PGPASSWORD"] = db_config["password"]
@@ -196,7 +196,7 @@ def apply_migration(version: str, direction: str = "up") -> bool:
         return success
 
 
-def get_migration_status() -> List[Dict[str, Any]]:
+def get_migration_status() -> List[Dict[str, object]]:
     status = []
     for m in MIGRATIONS:
         status.append({
@@ -254,7 +254,7 @@ def create_migration(description: str) -> str:
     return version
 
 
-def main():
+def main() -> None:
     parser = argparse.ArgumentParser(description="Database migration tool")
     parser.add_argument("--up", action="store_true", help="Apply all pending migrations")
     parser.add_argument("--down", action="store_true", help="Rollback a migration")
